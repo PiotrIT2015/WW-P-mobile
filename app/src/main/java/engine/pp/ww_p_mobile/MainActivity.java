@@ -1,6 +1,5 @@
 package engine.pp.ww_p_mobile;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -11,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
     private Button prevButton;
     private Button nextButton;
-    private List<Integer> imageIds;
+    private List<String> imageIds; // Use String for image URLs
     private int currentImageIndex = 0;
 
     @Override
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
                 String selectedCategory = parent.getItemAtPosition(position).toString();
-                loadImageIdsByCategory(selectedCategory);
+                loadImagesByCategory(selectedCategory);
                 showImage();
             }
 
@@ -68,13 +69,19 @@ public class MainActivity extends AppCompatActivity {
 
         // Initial category loading (optional, can choose to load a default if needed)
         String defaultCategory = categorySpinner.getSelectedItem().toString();
-        loadImageIdsByCategory(defaultCategory);
+        loadImagesByCategory(defaultCategory);
         showImage();
     }
 
     // Aktualizacja wyświetlanego obrazu
     private void updateImage(){
-        imageView.setImageResource(imageIds.get(currentImageIndex));
+        if (!imageIds.isEmpty() && currentImageIndex >= 0 && currentImageIndex < imageIds.size()) {
+            Glide.with(this)
+                    .load(imageIds.get(currentImageIndex))
+                    .into(imageView);
+        }else{
+            imageView.setImageDrawable(null); // Clear ImageView if no image
+        }
     }
 
     // Metoda wyświetlająca poprzedni obraz
@@ -95,53 +102,45 @@ public class MainActivity extends AppCompatActivity {
         updateImage();
     }
 
+
     private void showImage() {
         if (!imageIds.isEmpty() && currentImageIndex >= 0 && currentImageIndex < imageIds.size()) {
-            imageView.setImageResource(imageIds.get(currentImageIndex));
+            Glide.with(this)
+                    .load(imageIds.get(currentImageIndex))
+                    .into(imageView);
         } else {
             imageView.setImageDrawable(null); // Clear ImageView if no image
         }
     }
 
-    private void loadImageIdsByCategory(String category) {
+    private void loadImagesByCategory(String category) {
         imageIds.clear();
-        Resources resources = getResources();
-        String packageName = getPackageName();
+        String baseUrl = "https://www.google.com/interests/saved/list/?"; // Base URL for Unsplash random images
 
-        String basePath = "drawable/img/";
-        String categoryFolderName;
-
-        // Map categories to folder names
+        String categoryTag;
         switch (category) {
             case "Category 1":
-                categoryFolderName = "mission";
+                categoryTag = "mission";
                 break;
             case "Category 2":
-                categoryFolderName = "passion";
+                categoryTag = "passion";
                 break;
             case "Category 3":
-                categoryFolderName = "vacation";
+                categoryTag = "vacation";
                 break;
             case "Category 4":
-                categoryFolderName = "profession";
+                categoryTag = "profession";
                 break;
             default:
                 return; // Handle unexpected categories
         }
 
-
-        //Loop and create paths
-        for (int i = 1; i <= 8; i++) {
-            String fullPath = basePath + categoryFolderName + "/img" + i;
-            int resourceId = resources.getIdentifier(fullPath, null, packageName);
-
-            if(resourceId !=0) {
-                imageIds.add(resourceId);
-            }
-
+        // Add URLs to the list
+        for(int i = 0; i < 8; i++){
+            imageIds.add(baseUrl + categoryTag);
         }
+
 
         currentImageIndex = 0;
     }
-
 }
