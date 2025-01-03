@@ -119,16 +119,16 @@ public class MainActivity extends AppCompatActivity {
 
         String categoryTag;
         switch (category) {
-            case "Category 1":
+            case "mission":
                 categoryTag = "mission";
                 break;
-            case "Category 2":
+            case "passion":
                 categoryTag = "passion";
                 break;
-            case "Category 3":
+            case "vacation":
                 categoryTag = "vacation";
                 break;
-            case "Category 4":
+            case "profession":
                 categoryTag = "profession";
                 break;
             default:
