@@ -74,12 +74,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Aktualizacja wyświetlanego obrazu
-    private void updateImage(){
+    private void updateImage() {
         if (!imageIds.isEmpty() && currentImageIndex >= 0 && currentImageIndex < imageIds.size()) {
             Glide.with(this)
                     .load(imageIds.get(currentImageIndex))
                     .into(imageView);
-        }else{
+        } else {
             imageView.setImageDrawable(null); // Clear ImageView if no image
         }
     }
@@ -120,41 +120,24 @@ public class MainActivity extends AppCompatActivity {
 
         switch (category) {
             case "mission":
-<<<<<<< HEAD
-                for(int i = 1; i <= 2; i++) {
+                for (int i = 1; i <= 2; i++) {
                     imageIds.add(baseUrl + "mission" + i + ".jpg");
                 }
                 break;
             case "passion":
-                for(int i = 1; i <= 2; i++) {
-                   imageIds.add(baseUrl + "passion" + i + ".jpg");
+                for (int i = 1; i <= 2; i++) {
+                    imageIds.add(baseUrl + "passion" + i + ".jpg");
                 }
                 break;
             case "vacation":
-                for(int i = 1; i <= 2; i++) {
+                for (int i = 1; i <= 2; i++) {
                     imageIds.add(baseUrl + "vacation" + i + ".jpg");
                 }
                 break;
             case "profession":
-                 for(int i = 1; i <= 2; i++) {
-                     imageIds.add(baseUrl + "profession" + i + ".jpg");
-                 }
-=======
-                categoryTag = "mission";
-                break;
-            case "passion":
-                categoryTag = "passion";
-                break;
-            case "vacation":
-                categoryTag = "vacation";
-                break;
-            case "profession":
-                categoryTag = "profession";
->>>>>>> e9edd53d7b384d4008a5bb98ef0cff2dacf0f992
-                break;
-            default:
-                return;
+                for (int i = 1; i <= 2; i++) {
+                    imageIds.add(baseUrl + "profession" + i + ".jpg");
+                }
         }
-        currentImageIndex = 0;
     }
 }
