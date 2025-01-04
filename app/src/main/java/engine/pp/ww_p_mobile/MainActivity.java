@@ -115,32 +115,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadImagesByCategory(String category) {
         imageIds.clear();
-        String baseUrl = "https://www.google.com/interests/saved/list/?"; // Base URL for Unsplash random images
+        //Przykładowe URL, musisz zmienić na swoje
+        String baseUrl = "https://raw.githubusercontent.com/PiotrIT2015/WW-P/main/img/";
 
-        String categoryTag;
         switch (category) {
-            case "Category 1":
-                categoryTag = "mission";
+            case "mission":
+                for(int i = 1; i <= 2; i++) {
+                    imageIds.add(baseUrl + "mission" + i + ".jpg");
+                }
                 break;
-            case "Category 2":
-                categoryTag = "passion";
+            case "passion":
+                for(int i = 1; i <= 2; i++) {
+                   imageIds.add(baseUrl + "passion" + i + ".jpg");
+                }
                 break;
-            case "Category 3":
-                categoryTag = "vacation";
+            case "vacation":
+                for(int i = 1; i <= 2; i++) {
+                    imageIds.add(baseUrl + "vacation" + i + ".jpg");
+                }
                 break;
-            case "Category 4":
-                categoryTag = "profession";
+            case "profession":
+                 for(int i = 1; i <= 2; i++) {
+                     imageIds.add(baseUrl + "profession" + i + ".jpg");
+                 }
                 break;
             default:
-                return; // Handle unexpected categories
+                return;
         }
-
-        // Add URLs to the list
-        for(int i = 0; i < 8; i++){
-            imageIds.add(baseUrl + categoryTag);
-        }
-
-
         currentImageIndex = 0;
     }
 }

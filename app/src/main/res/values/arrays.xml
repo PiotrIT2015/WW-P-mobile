@@ -3,7 +3,7 @@
     <string-array name="categories_array">
         <item>passion</item>
         <item>mission</item>
-        <item>vaccation</item>
+        <item>vacation</item>
         <item>profession</item>
     </string-array>
 </resources>
