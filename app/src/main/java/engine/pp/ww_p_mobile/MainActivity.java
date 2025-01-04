@@ -1,19 +1,23 @@
 package engine.pp.ww_p_mobile;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.AdapterView;
-import android.util.Log; // Dodane dla logowania
-import android.widget.Toast; // Dodane dla Toast (opcjonalne)
+import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions; // Dodane dla Glide opcji
-
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Glide.get(this).setLogLevel(Log.VERBOSE);
+        // Glide.get(this).setLogLevel(Log.VERBOSE); // Włącz verbose
 
         categorySpinner = findViewById(R.id.categorySpinner);
         imageView = findViewById(R.id.imageView);
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 String selectedCategory = parent.getItemAtPosition(position).toString();
                 loadImagesByCategory(selectedCategory);
                 showImage();
+                Toast.makeText(MainActivity.this, "Selected category: " + selectedCategory, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -84,6 +89,18 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(imageIds.get(currentImageIndex))
                     //.error(R.drawable.placeholder_image) // Dodaj placeholder obraz
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            Log.e("Glide", "Error loading image", e); // Logowanie błędu
+                            return false; // ważne aby zwrócić false, aby Glide spróbował wyświetlić placeholder
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
                     .into(imageView);
         } else {
             imageView.setImageDrawable(null); // Clear ImageView if no image
@@ -113,6 +130,19 @@ public class MainActivity extends AppCompatActivity {
         if (!imageIds.isEmpty() && currentImageIndex >= 0 && currentImageIndex < imageIds.size()) {
             Glide.with(this)
                     .load(imageIds.get(currentImageIndex))
+                    //.error(R.drawable.placeholder_image) // Ustaw domyślny obraz
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            Log.e("Glide", "Error loading image", e); // logowanie błędu
+                            return false; // ważne aby zwrócić false, aby Glide spróbował wyświetlić placeholder
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
                     .into(imageView);
         } else {
             imageView.setImageDrawable(null); // Clear ImageView if no image
@@ -121,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadImagesByCategory(String category) {
         imageIds.clear();
-        String baseUrl = "https://raw.githubusercontent.com/PiotrIT2015/WW-P/main/img/";
+        String baseUrl = "https://raw.githubusercontent.com/PiotrIT2015/WW-P-mobile/main/img/";
         switch (category) {
             case "mission":
                 for(int i = 1; i <= 2; i++) {
