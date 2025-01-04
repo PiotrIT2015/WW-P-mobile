@@ -5,8 +5,7 @@
 * [Technologies](#technologies)
 
 ## General info
-This is an app for android which loads and shows Google collections. Obviously, at first, you had to create collection 
-in Google.  
+This is an app for android which loads and shows images store in website with separated folders.  
 	
 ## Technologies
 Project is created with:

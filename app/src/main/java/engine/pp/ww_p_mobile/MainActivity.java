@@ -6,14 +6,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.AdapterView;
-import android.widget.Toast;
+import android.util.Log; // Dodane dla logowania
+import android.widget.Toast; // Dodane dla Toast (opcjonalne)
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions; // Dodane dla Glide opcji
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Glide.get(this).setLogLevel(Log.VERBOSE);
 
         categorySpinner = findViewById(R.id.categorySpinner);
         imageView = findViewById(R.id.imageView);
@@ -78,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         if (!imageIds.isEmpty() && currentImageIndex >= 0 && currentImageIndex < imageIds.size()) {
             Glide.with(this)
                     .load(imageIds.get(currentImageIndex))
+                    //.error(R.drawable.placeholder_image) // Dodaj placeholder obraz
                     .into(imageView);
         } else {
             imageView.setImageDrawable(null); // Clear ImageView if no image
@@ -115,29 +121,39 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadImagesByCategory(String category) {
         imageIds.clear();
-        //Przykładowe URL, musisz zmienić na swoje
         String baseUrl = "https://raw.githubusercontent.com/PiotrIT2015/WW-P/main/img/";
-
         switch (category) {
             case "mission":
-                for (int i = 1; i <= 2; i++) {
-                    imageIds.add(baseUrl + "mission" + i + ".jpg");
+                for(int i = 1; i <= 2; i++) {
+                    String url = baseUrl + "mission" + i + ".jpg";
+                    imageIds.add(url);
+                    Log.d("URL_DEBUG", "mission URL: " + url); // Logowanie URL-a
                 }
                 break;
             case "passion":
-                for (int i = 1; i <= 2; i++) {
-                    imageIds.add(baseUrl + "passion" + i + ".jpg");
+                for(int i = 1; i <= 2; i++) {
+                    String url = baseUrl + "passion" + i + ".jpg";
+                    imageIds.add(url);
+                    Log.d("URL_DEBUG", "passion URL: " + url);
                 }
                 break;
             case "vacation":
-                for (int i = 1; i <= 2; i++) {
-                    imageIds.add(baseUrl + "vacation" + i + ".jpg");
+                for(int i = 1; i <= 2; i++) {
+                    String url = baseUrl + "vacation" + i + ".jpg";
+                    imageIds.add(url);
+                    Log.d("URL_DEBUG", "vacation URL: " + url);
                 }
                 break;
             case "profession":
-                for (int i = 1; i <= 2; i++) {
-                    imageIds.add(baseUrl + "profession" + i + ".jpg");
+                for(int i = 1; i <= 2; i++) {
+                    String url = baseUrl + "profession" + i + ".jpg";
+                    imageIds.add(url);
+                    Log.d("URL_DEBUG", "profession URL: " + url);
                 }
+                break;
+            default:
+                return;
         }
+        currentImageIndex = 0;
     }
 }
