@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (category) {
             case "mission":
+<<<<<<< HEAD
                 for(int i = 1; i <= 2; i++) {
                     imageIds.add(baseUrl + "mission" + i + ".jpg");
                 }
@@ -138,6 +139,18 @@ public class MainActivity extends AppCompatActivity {
                  for(int i = 1; i <= 2; i++) {
                      imageIds.add(baseUrl + "profession" + i + ".jpg");
                  }
+=======
+                categoryTag = "mission";
+                break;
+            case "passion":
+                categoryTag = "passion";
+                break;
+            case "vacation":
+                categoryTag = "vacation";
+                break;
+            case "profession":
+                categoryTag = "profession";
+>>>>>>> e9edd53d7b384d4008a5bb98ef0cff2dacf0f992
                 break;
             default:
                 return;
