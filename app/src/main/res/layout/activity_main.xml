@@ -43,6 +43,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/spinner_background_color"
+        android:popupBackground="@color/spinner_popup_background_color"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
