@@ -153,6 +153,10 @@ public class MainActivity extends AppCompatActivity {
         imageIds.clear();
         String baseUrl = "https://raw.githubusercontent.com/PiotrIT2015/WW-P-mobile/main/img/";
         switch (category) {
+            case "ikigai":
+                String url0 = baseUrl + "ikigai.jpeg";
+                imageIds.add(url0);
+                break;
             case "mission":
                 for(int i = 1; i <= 2; i++) {
                     String url = baseUrl + "mission" + i + ".jpg";
